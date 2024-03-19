@@ -102,6 +102,8 @@ pipeline {
         }
          stage ('Test in staging') {
             agent any
+            environment {
+                HOSTNAME_DEPLOY_STAGING = "35.153.54.246"
             steps {
               script {
                   sh '''
@@ -142,6 +144,8 @@ pipeline {
 
         stage ('Test in prod') {
             agent any
+            environment {
+                HOSTNAME_DEPLOY_PROD = "54.205.162.45"
             steps {
               script {
                   sh '''

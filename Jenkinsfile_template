@@ -1,0 +1,96 @@
+pipeline {
+     environment {
+        PORT_EXPOSED = "80"
+        PRODUCTION = "${ID_DOCKER}-production"
+     }
+
+     agent none
+     stages {
+        stage('Run container based on builded image') {
+            agent any
+            steps {
+               script {
+                 sh '''
+                 '''
+               }
+            }
+       }
+         stage('Build image') {
+             agent any
+             steps {
+                script {
+                }
+             }
+        }
+       stage('Test image') {
+           agent any
+           steps {
+              script {
+                sh '''
+                    
+                '''
+              }
+           }
+      }
+      stage('Clean Container') {
+          agent any
+          steps {
+             script {
+               sh '''
+               '''
+             }
+          }
+     }
+
+     stage ('Login and Push Image on docker hub') {
+          agent any
+        environment {
+           DOCKERHUB_AUTH  = credentials('dockerhub')
+        }            
+          steps {
+             script {
+               sh '''
+               '''
+             }
+          }
+      }
+
+    stage('Deploy in staging') {
+        agent any
+        when {
+            expression { GIT_BRANCH == 'origin/master' }
+        }
+        environment {
+            DOCKERHUB_AUTH  = credentials('dockerhub')
+            HOSTNAME_DEPLOY_STAGING = "ec2-100-26-192-220.compute-1.amazonaws.com"
+        }  
+        steps {
+            sshagent(credentials: ['SSH_AUTH']) {
+                sh '''
+                '''
+            }
+        }
+    }
+
+    stage('Deploy in prod') {
+        agent any
+        when {
+            expression { GIT_BRANCH == 'origin/master' }
+        }
+        environment {
+            DOCKERHUB_AUTH  = credentials('dockerhub')
+            HOSTNAME_DEPLOY_STAGING = "ec2-100-26-192-220.compute-1.amazonaws.com"
+        }  
+        steps {
+            sshagent(credentials: ['SSH_AUTH']) {
+                sh '''
+                '''
+            }
+        }
+     }
+  }
+
+  posts {
+
+  }
+}

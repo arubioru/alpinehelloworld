@@ -105,7 +105,7 @@ pipeline {
             steps {
               script {
                   sh '''
-                    curl ${HOSTNAME_DEPLOY_STAGING} | grep -q "Hello world Antoine!"
+                    curl http://${HOSTNAME_DEPLOY_STAGING} | grep -q "Hello world Antoine!"
                   '''
               }
             }
@@ -145,7 +145,7 @@ pipeline {
             steps {
               script {
                   sh '''
-                    curl ${HOSTNAME_DEPLOY_PROD} | grep -q "Hello world Antoine!"
+                    curl http://${HOSTNAME_DEPLOY_PROD} | grep -q "Hello world Antoine!"
                   '''
               }
             }
